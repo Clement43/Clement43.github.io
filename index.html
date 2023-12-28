@@ -1,1 +1,220 @@
-<meta http-equiv="Refresh" content="0; url='https://www.w3docs.com'" />
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz HTML</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            text-align: center;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #quizForm {
+            max-width: 500px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        fieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        legend {
+            font-weight: bold;
+            color: #555;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #f00;
+            margin-top: 10px;
+        }
+
+        .divImg{
+            display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Quiz de noël</h1>
+
+<form id="quizForm">
+    <!-- Question 1 -->
+    <fieldset id="question1">
+        <legend>Question 1: Quelle est la créature la plus mignonne de l'univers</legend>
+        <input id="chat" value="" type="text">
+        <button type="button" onclick="showCommentaire()">Valider</button>
+    </fieldset>
+
+    <!-- Question 2 -->
+    <fieldset id="question2" style="display: none;">
+        <legend>Question 2: Quelle est l'orthographe de cette animale ?</legend>
+        <div class="divImg">      
+            <img src="./orto.png" width="25%">
+            <input id="orto" value="" type="text">
+        </div>
+  
+        <button type="button" onclick="showCommentaire()">Valider</button>
+    </fieldset>
+
+    <!-- Question 3 -->
+    <fieldset id="question3" style="display: none;">
+        <legend>Question 3: 1 + 1 fait il vraiment 2</legend>
+        <label>
+            <input type="radio" name="q3" value="oui"> Oui
+        </label>
+        <label>
+            <input type="radio" name="q3" value="non"> Non
+        </label>
+
+        <button type="button" onclick="showCommentaire()">Valider</button>
+    </fieldset>
+
+    <!-- Question 4 -->
+    <fieldset id="question4" style="display: none;">
+        <legend>Question 4: Pour finir petit rebus</legend>
+        <div class="divImg">      
+            <img src="./rebus.png" width="80%">
+            <input id="chat2" value="" type="text">
+        </div>
+        <button type="button" onclick="showCommentaire()">Valider</button>
+    </fieldset>
+
+    <div id="errorMessage" class="error-message"></div>
+
+    <fieldset id="bonneReponse" style="display: none;">
+        <div> Bonne réponse </div>
+        <div id="commentaire1" style="display: none;">
+            <div> Il suffit juste de la regarder</div>
+            <img src="./choupette.jpg" width="25%">
+        </div>
+        <div id="commentaire2" style="display: none;">
+            <div>Peut importe l'orthographe de toute façon même moi, je ne le connais pas </div>
+        </div>
+        <div id="commentaire3" style="display: none;">
+            <div>Effectivement ça revient à dire que la racine carrée de 4, moins 2 divisé par un demi, le tout multiplié par la quantité obtenue en soustrayant un quart de trois moitiés
+            </div>
+        </div>
+
+        <div id="commentaire4" style="display: none;">
+            <div>Toujours aussi belle, mais voici ton cadeau </div>
+            <img src="./choupette2.jpg" width="25%">
+  
+        </div>
+
+
+
+
+        <button id="nextQuestionId" type="button" onclick="nextQuestion()">Suivant</button>
+        <button id="redirectTroll" type="button" onclick="redirect()" style="display: none;">Cadeau</button>
+    </fieldset>
+</form>
+
+
+
+<script>
+    let currentQuestion = 1;
+
+    function nextQuestion() {
+        
+            document.getElementById('bonneReponse').style.display = 'none';
+            document.getElementById('commentaire'+currentQuestion).style.display = 'none';
+            currentQuestion++;
+            document.getElementById('question' + currentQuestion).style.display = 'block';
+            document.getElementById('errorMessage').innerHTML = '';
+    }
+
+    function showCommentaire(){
+        if (validateAnswer()) {
+        document.getElementById('question' + currentQuestion).style.display = 'none';
+        document.getElementById('errorMessage').innerHTML = '';
+        document.getElementById('bonneReponse').style.display = 'block';
+        document.getElementById('commentaire'+currentQuestion).style.display = 'block';
+        }else {
+            document.getElementById('errorMessage').innerHTML = 'Mauvaise réponse recommence';
+    }
+
+
+    }
+
+    function submitQuiz() {
+        if (validateAnswer()) {
+            // Vous pouvez ajouter ici la logique pour évaluer les réponses du quiz
+            // et afficher les résultats.
+            alert("Quiz soumis !");
+        } else {
+            document.getElementById('errorMessage').innerHTML = 'Veuillez répondre à toutes les questions avant de soumettre le quiz.';
+        }
+    }
+
+    function validateAnswer() {
+        let retour = false;
+
+        switch (currentQuestion) {
+            case 1:
+                 retour = document.getElementById('chat').value.toLowerCase() == "choupette"
+                break;
+            case 2: retour = true
+            break;
+            case 3: retour = document.querySelector('input[name="q3"]:checked').value == "oui";
+            break;
+            case 4: if(document.getElementById('chat2').value.toLowerCase() == "choupette"){
+            retour = true
+            document.getElementById('nextQuestionId').style.display = 'none';
+            document.getElementById('redirectTroll').style.display = 'block';
+            }
+            break;
+
+            default:
+                break;
+        }
+        return retour;
+    }
+
+    function redirect(){
+        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    }
+</script>
+
+</body>
+</html>
