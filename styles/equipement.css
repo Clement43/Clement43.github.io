@@ -1,0 +1,17 @@
+#content-equipement{
+    display: flex;
+    flex-flow: row;
+}
+
+.iamge-equipement{
+    width: 100%;
+}
+
+.iamge-equipement > img{
+    width: 95%;
+}
+
+.texte-equipement{
+    margin-top: 10px;
+    font-size: 20px;
+}
